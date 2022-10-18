@@ -1,17 +1,3 @@
-# with open('maze_map.txt', 'w') as outfile:
-#   outfile.write('0\n')
-#   outfile.write('xxxxxxxxxxxxxxxxxxxxxx\n')
-#   outfile.write('x   x   xx xx        x\n')
-#   outfile.write('x     x     xxxxxxxxxx\n')
-#   outfile.write('x x   xxx  xxxx xxx xx\n')
-#   outfile.write('  x   x x xx   xxxx  x\n')
-#   outfile.write('x          xx xxx  x x\n')
-#   outfile.write('xxxxxxx x      xx  x x\n')
-#   outfile.write('xxxxxxxxx  x x  xx   x\n')
-#   outfile.write('x          x x Sx x  x\n')
-#   outfile.write('xxxxx x  x x x     x x\n')
-#   outfile.write('xxxxxxxxxxxxxxxxxxxxxx')
-
 import os
 import matplotlib.pyplot as plt
 

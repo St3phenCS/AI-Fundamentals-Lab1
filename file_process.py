@@ -124,3 +124,4 @@ print("UCS: ",cost3)
 visualize_maze(matrix,bonus_points,start,end,sol3,"ucs")
 
 #test push
+#test branch

@@ -1,6 +1,5 @@
 import queue
-MAX= 100
-INF = int(1e9)
+import heuristics as h
 
 class Node:
     def __init__(self,cell,w=0) :
@@ -21,7 +20,7 @@ def isValid(MAZE,cell):
         return False
     return True
 
-def AStart(MAZE,heuristic):
+def AStar(MAZE,heuristic):
     start = ()
     goal = () 
     solution = []
@@ -67,3 +66,8 @@ def AStart(MAZE,heuristic):
     return solution,-1
 
 
+def astar_heuristic_1(MAZE):
+    return AStar(MAZE,h.Euclid)
+
+def astar_heuristic_2(MAZE):
+    return AStar(MAZE,h.Mahattan)

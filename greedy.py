@@ -1,6 +1,5 @@
 import queue
-MAX= 100
-INF = int(1e9)
+import heuristics as h
 
 class Node:
     def __init__(self,cell,w=0) :
@@ -64,3 +63,9 @@ def GreedyBFS(MAZE,heuristic):
     return solution,-1
 
 
+def gbfs_heuristic_1(MAZE):
+    return GreedyBFS(MAZE,h.Euclid)
+
+
+def gbfs_heuristic_2(MAZE):
+    return GreedyBFS(MAZE,h.Mahattan)

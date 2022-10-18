@@ -22,7 +22,7 @@ def isValid(MAZE,cell):
         return False
     return True
 
-def UCS(MAZE):
+def ucs(MAZE):
     start = ()
     goal = () 
     solution = []

@@ -8,7 +8,7 @@ def isValid(MAZE,cell):
         return False
     return True
 
-def BFS(MAZE):
+def bfs(MAZE):
     start = ()
     goal = () 
     solution = []

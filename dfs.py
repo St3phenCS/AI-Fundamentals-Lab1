@@ -8,7 +8,7 @@ def isValid(MAZE,cell):
         return False
     return True
 
-def DFS(MAZE):
+def dfs(MAZE):
     cost=0
     start = ()
     goal = () 

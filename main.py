@@ -1,3 +1,4 @@
+import ast
 import os
 import matplotlib.pyplot as plt
 
@@ -99,6 +100,7 @@ import bfs
 import ucs
 import heuristics as h
 import greedy as gbfs
+import astar
 sol1,cost1 = dfs.DFS(matrix)
 print("DFS: ",cost1)
 visualize_maze(matrix,bonus_points,start,end,sol1,"dfs")
@@ -115,4 +117,16 @@ visualize_maze(matrix,bonus_points,start,end,sol3,"ucs")
 
 sol4,cost4= gbfs.GreedyBFS(matrix,h.Euclid)
 print("GBFS: ",cost4)
-visualize_maze(matrix,bonus_points,start,end,sol4,"gbfs")
+visualize_maze(matrix,bonus_points,start,end,sol4,"gbfs_euclid")
+
+sol5,cost5= gbfs.GreedyBFS(matrix,h.Mahattan)
+print("GBFS: ",cost5)
+visualize_maze(matrix,bonus_points,start,end,sol5,"gbfs_mahattan")
+
+sol6,cost6= astar.AStart(matrix,h.Euclid)
+print("A* Euclid: ",cost6)
+visualize_maze(matrix,bonus_points,start,end,sol6,"astar_euclid")
+
+sol7,cost7= astar.AStart(matrix,h.Mahattan)
+print("A* Mahattan: ",cost7)
+visualize_maze(matrix,bonus_points,start,end,sol7,"astar_mahattan")

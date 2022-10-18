@@ -21,11 +21,12 @@ def isValid(MAZE,cell):
         return False
     return True
 
-def GreedyBFS(MAZE,heuristic):
+def AStart(MAZE,heuristic):
     start = ()
     goal = () 
     solution = []
     visited = {}
+    dist={}
     pq = queue.PriorityQueue()
     dx=[-1, 0, 1, 0, -1]
     cost=0
@@ -38,9 +39,9 @@ def GreedyBFS(MAZE,heuristic):
                     goal = (row, col)
     pq.put(Node(start))
     visited[start]=start
+    dist[start]=0;
     while not pq.empty():
         node =  pq.get()
-        # print(node.cell)
         (x,y)=node.cell
         w=node.w
         if (x,y) == goal:
@@ -56,8 +57,10 @@ def GreedyBFS(MAZE,heuristic):
             newX=x+dx[i]
             newY=y+dx[i+1]
             if isValid(MAZE,(newX,newY)) and (newX,newY) not in visited:
+                g=dist[(x,y)]+1
+                dist[(newX,newY)]=g
                 h=heuristic((newX,newY),goal)
-                newNode=Node((newX,newY),h)
+                newNode=Node((newX,newY),g+h)
                 pq.put(newNode)
                 visited[(newX, newY)]=(x,y)
                 cost+=1

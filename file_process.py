@@ -75,19 +75,19 @@ def visualize_maze(matrix, bonus, start, end, route=None,output='output'):
       print(f'Bonus point at position (x, y) = {point[0], point[1]} with point {point[2]}')
 
 
-def read_file(file_name: str = 'maze.txt'):
-  f=open(file_name,'r')
-  n_bonus_points = int(next(f)[:-1])
-  bonus_points = []
-  for i in range(n_bonus_points):
-    x, y, reward = map(int, next(f)[:-1].split(' '))
-    bonus_points.append((x, y, reward))
+def read_file(file_name: str = 'maze_map.txt'):
+    f=open(file_name,'r')
+    n_bonus_points = int(next(f)[:-1])
+    bonus_points = []
+    for i in range(n_bonus_points):
+        x, y, reward = map(int, next(f)[:-1].split(' '))
+        bonus_points.append((x, y, reward))
 
-  text=f.read()
-  matrix=[list(i) for i in text.splitlines()]
-  f.close()
+    text=f.read()
+    matrix=[list(i) for i in text.splitlines()]
+    f.close()
 
-  return bonus_points, matrix
+    return bonus_points, matrix
 
 
 bonus_points, matrix = read_file('./input/maze1.txt')
@@ -122,3 +122,5 @@ visualize_maze(matrix,bonus_points,start,end,sol1,"dfs")
 sol3,cost3=ucs.UCS(matrix)
 print("UCS: ",cost3)
 visualize_maze(matrix,bonus_points,start,end,sol3,"ucs")
+
+#test push

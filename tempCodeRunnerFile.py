@@ -1,0 +1,1 @@
+visualize_maze(matrix,bonus_points,start,end,sol3)

@@ -45,7 +45,7 @@ def visualize_maze(matrix, bonus,nameIn='input',nameOut='output',route=None):
         direction.pop(0)
 
     #2. Drawing the map
-    ax=plt.figure(dpi=300).add_subplot(111)
+    ax=plt.figure(dpi=200).add_subplot(111)
 
     for i in ['top','bottom','right','left']:
         ax.spines[i].set_visible(False)
@@ -78,12 +78,15 @@ def visualize_maze(matrix, bonus,nameIn='input',nameOut='output',route=None):
         path='./output/'+nameIn+'/'+nameOut+'/'
     if not os.path.exists(path):
         os.makedirs(path)
-    plt.savefig(path+nameOut)
+    fileName=path+nameOut
+    plt.savefig(fileName)
     plt.close()
-
+   
 
     for _, point in enumerate(bonus):
       print(f'Bonus point at position (x, y) = {point[0], point[1]} with point {point[2]}')
+    
+    return fileName
 
 
 def read_file(file_name: str = './input/level_1/input1.txt'):
@@ -100,34 +103,7 @@ def read_file(file_name: str = './input/level_1/input1.txt'):
 
         return bonus_points, matrix
 
-# import os,glob
-# import heuristics as h
-# import greedy as gbfs
-# import astar
-# algList=[]
-# algList.append(gbfs.GBFS_Heuristic_1)
-# algList.append(gbfs.GBFS_Heuristic_2)
-# algList.append(astar.astar_heuristic_1)
-# algList.append(astar.astar_heuristic_2)
-# folder_path = './input/level_1/'
-# fileList=sorted(glob.glob(os.path.join(folder_path, '*.txt')))
-# i=0
-# from pathlib import Path
-# for filename in fileList :
-#     intputName=Path(filename).stem
-#     bonus_points, matrix = read_file(filename)
-#     for alg in algList:
-#         sol,cost= alg(matrix)
-#         visualize_maze(matrix,bonus_points,intputName,alg.__name__,sol)
-    
 
-    
-    
-    
-# i=len(arrayInputFile)
-# print(i)
-
-# bonus_points, matrix = read_file('./input/maze3.txt')
 
 
 

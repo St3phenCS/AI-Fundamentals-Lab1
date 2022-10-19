@@ -27,4 +27,6 @@ for filename in fileList :
     bonus_points, matrix = IO.read_file(filename)
     for alg in algList:
         sol,cost= alg(matrix)
-        IO.visualize_maze(matrix,bonus_points,intputName,alg.__name__,sol)
+        costPath=IO.visualize_maze(matrix,bonus_points,intputName,alg.__name__,sol)
+        with open(costPath, 'w') as costFile:
+            costFile.write(str(cost))

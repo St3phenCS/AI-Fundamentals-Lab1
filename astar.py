@@ -50,7 +50,7 @@ def AStar(MAZE,heuristic):
             while backtrack_node != start:
                 backtrack_node = visited[backtrack_node]
                 solution.insert(0,backtrack_node)
-            return solution,cost    
+            return start,goal,visited,solution,cost      
       
         for i in range(4):
             newX=x+dx[i]
@@ -63,7 +63,7 @@ def AStar(MAZE,heuristic):
                 pq.put(newNode)
                 visited[(newX, newY)]=(x,y)
                 cost+=1
-    return solution,-1
+    return start,goal,visited,solution,-1
 
 
 def astar_heuristic_1(MAZE):

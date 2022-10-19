@@ -51,7 +51,7 @@ def ucs(MAZE):
             while backtrack_node != start:
                 backtrack_node = visited[backtrack_node]
                 solution.insert(0,backtrack_node)
-            return solution,cost    
+            return start,goal,visited,solution,cost     
       
         for i in range(4):
             newX=x+dx[i]
@@ -60,6 +60,6 @@ def ucs(MAZE):
                 pq.put(Node((newX,newY),dist+1))
                 visited[(newX, newY)]=(x,y)
                 cost+=1
-    return solution,-1
+    return start,goal,visited,solution,-1 
 
 

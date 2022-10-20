@@ -56,7 +56,7 @@ def AStar(MAZE,heuristic):
         for i in range(4):
             newX=x+dx[i]
             newY=y+dx[i+1]
-            if isValid(MAZE,(newX,newY)) and (newX,newY) not in visited:
+            if isValid(MAZE,(newX,newY)) and ((newX,newY) not in visited or dist[(newX,newY)]>dist[(x,y)]+1):
                 g=dist[(x,y)]+1
                 dist[(newX,newY)]=g
                 h=heuristic((newX,newY),goal)
@@ -70,5 +70,5 @@ def AStar(MAZE,heuristic):
 def astar_heuristic_1(MAZE,bonus=NULL):
     return AStar(MAZE,h.Euclid)
 
-def astar_heuristic_2(MAZE):
+def astar_heuristic_2(MAZE,bonus=NULL):
     return AStar(MAZE,h.Mahattan)

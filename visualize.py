@@ -131,5 +131,5 @@ import astar
 import alg1
 path = './input/level_2/input3.txt'
 # alg =bfs.bfs
-alg=astar.astar_heuristic_1
+alg=ucs.ucs
 run_visualization(path,alg)

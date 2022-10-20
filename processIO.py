@@ -63,10 +63,15 @@ def visualize_maze(matrix, bonus,nameIn='input',nameOut='output',route=None):
         for i in range(len(route)-2):
             plt.scatter(route[i+1][1],-route[i+1][0],
                         marker=direction[i],color='#20B2AA')
-
-    plt.text(end[1],-end[0],'EXIT',color='red',
-         horizontalalignment='center',
-         verticalalignment='center',size =7, rotation=-90,fontweight='bold')
+                        
+    if end[0] == 0 or end[0] == len(matrix) - 1:
+        plt.text(end[1],-end[0],'EXIT',color='red',
+            horizontalalignment='center', 
+            verticalalignment='center',size = 7, rotation=-90,fontweight='bold')
+    else: 
+        plt.text(end[1],-end[0],'EXIT',color='red',
+            horizontalalignment='center', 
+            verticalalignment='center',size =7,fontweight='bold')
     plt.xticks([])
     plt.yticks([])
 

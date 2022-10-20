@@ -1,15 +1,16 @@
+from asyncio.windows_events import NULL
 from dis import dis
 import queue
 MAX= 100
 INF = int(1e9)
 
 class Node:
-    def __init__(self,cell,dist) :
+    def __init__(self,cell,w=0) :
         self.cell=cell
-        self.dist=dist
+        self.w=w
     
     def __lt__(self,other):
-        return self.dist<=other.dist
+        return self.w<=other.w
 
 
 
@@ -22,7 +23,7 @@ def isValid(MAZE,cell):
         return False
     return True
 
-def ucs(MAZE):
+def ucs(MAZE,bonus=NULL):
     start = ()
     goal = () 
     solution = []
@@ -30,6 +31,7 @@ def ucs(MAZE):
     pq = queue.PriorityQueue()
     dx=[-1, 0, 1, 0, -1]
     cost=0
+    dist={}
     for row in range(len(MAZE)):
         for col in range(len(MAZE[row])):
             if MAZE[row][col] == 'S':
@@ -39,11 +41,11 @@ def ucs(MAZE):
                     goal = (row, col)
     pq.put(Node(start,0))
     visited[start]=start
+    dist[start]=0
     while not pq.empty():
         node =  pq.get()
         # print(node.cell)
         (x,y)=node.cell
-        dist=node.dist
         if (x,y) == goal:
             print('Solution found')
             backtrack_node = goal
@@ -56,10 +58,18 @@ def ucs(MAZE):
         for i in range(4):
             newX=x+dx[i]
             newY=y+dx[i+1]
-            if isValid(MAZE,(newX,newY)) and (newX,newY) not in visited:
-                pq.put(Node((newX,newY),dist+1))
+            # print(dist[(newX,newY)])
+            if isValid(MAZE,(newX,newY)) and ((newX,newY) not in visited or dist[(newX,newY)]>dist[(x,y)]+1):
+                g=dist[(x,y)]+1
+                dist[(newX,newY)]=g
+                newNode=Node((newX,newY),10)
+                pq.put(newNode)
                 visited[(newX, newY)]=(x,y)
                 cost+=1
+            # if isValid(MAZE,(newX,newY)) and (newX,newY) not in visited:
+            #     pq.put(Node((newX,newY),dist+1))
+            #     visited[(newX, newY)]=(x,y)
+            #     cost+=1
     return start,goal,visited,solution,-1 
 
 

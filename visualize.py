@@ -20,7 +20,7 @@ GOODBLUE='#20B2AA'
 MAZE = []
 BONUS=[]
 VIS=[]
-SOl=[]
+SOL=[]
 SRC=(0,0)
 DST=(0,0)
 ALGNAME=''
@@ -56,7 +56,7 @@ def MazeInitialize(MAZE):
             if (row,col) == SRC:
                 pygame.draw.rect(screen, RED, (col * TILE, row * TILE, TILE, TILE))
             if (row, col) == DST:
-                pygame.draw.rect(screen, GREEN, (col * TILE, row * TILE, TILE, TILE))
+                pygame.draw.rect(screen, ORANGE, (col * TILE, row * TILE, TILE, TILE))
             if MAZE[row][col] == '+':
                 screen.blit(STAR,(col * TILE, row * TILE))
 
@@ -66,7 +66,7 @@ def draw_window():
 
 def run_visualization(pathIn,alg):
     
-    global MAZE ,BONUS,VIS,SOl,SRC,DST,ALGNAME,screen,TILE,STAR
+    global MAZE ,BONUS,VIS,SOL,SRC,DST,ALGNAME,screen,TILE,STAR
     BONUS,MAZE=IO.read_file(pathIn)
     if len(MAZE) >= 40 or len(MAZE[0]) >= 80:
         TILE = 18
@@ -75,14 +75,13 @@ def run_visualization(pathIn,alg):
     WIDTH = TILE*len(MAZE[0])  # screen width
     HEIGHT = TILE*len(MAZE)  # screen height
     SCREEN_SIZE = [WIDTH, HEIGHT]
-    if len(BONUS)>0:
-        out = alg(MAZE,BONUS)
-    else:
-        out = alg(MAZE)
+    out = alg(MAZE,BONUS)
     VIS=list(out[2].keys())
-    SOl=out[3]
+  
+    SOL=out[3]
     SRC=out[0]
     DST=out[1]
+    SOL.pop(0)
     TILE=int(HEIGHT/len(MAZE))
     ALGNAME=alg.__name__.upper()
     pygame.init()
@@ -103,11 +102,14 @@ def run_visualization(pathIn,alg):
                 sys.exit()
                 break
         draw_window()
+        
         if algorithm_running:
             if len(VIS)>0:
                 current =VIS.pop(0)
                 x=current[0]
                 y=current[1]
+                if (x,y)==DST:
+                    VIS.clear()
                 #mark cell VISited
                 tmp = list(MAZE[x])
                 tmp[y]='v'
@@ -115,18 +117,18 @@ def run_visualization(pathIn,alg):
                 ##
                 
                 pygame.draw.rect(screen, BLUE, (y * TILE, x * TILE, TILE, TILE))
-                pygame.time.wait(50)
+                pygame.time.wait(30)
                 pygame.display.update()
             else:
-                for node in SOl:
+                for node in SOL:
                     pygame.draw.rect(screen, GREEN, (node[1] * TILE, node[0] * TILE, TILE, TILE))
-                    pygame.time.wait(50)
+                    pygame.time.wait(70)
                     pygame.display.update()
                 algorithm_running = False
             pygame.time.wait(50)
             
         else:
-            pygame.time.wait(1000)
+            pygame.time.wait(1500)
             pygame.quit()
             sys.exit()
 
@@ -138,5 +140,7 @@ import astar
 import alg1
 path = './input/level_2/input3.txt'
 # alg =bfs.bfs
-alg=bfs.bfs
+# alg=alg1.ALG_heuristic_1
+alg=alg1.ALG_heuristic_1
 run_visualization(path,alg)
+

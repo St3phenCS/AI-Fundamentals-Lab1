@@ -32,6 +32,7 @@ def ucs(MAZE,bonus=NULL):
     dx=[-1, 0, 1, 0, -1]
     cost=0
     dist={}
+    vis=[]
     for row in range(len(MAZE)):
         for col in range(len(MAZE[row])):
             if MAZE[row][col] == 'S':
@@ -40,7 +41,8 @@ def ucs(MAZE,bonus=NULL):
                 if MAZE[row][col] == ' ':
                     goal = (row, col)
     pq.put(Node(start,0))
-    visited[start]=start
+    # visited[start]=start
+    vis.append(start)
     dist[start]=0
     while not pq.empty():
         node =  pq.get()
@@ -59,10 +61,10 @@ def ucs(MAZE,bonus=NULL):
             newX=x+dx[i]
             newY=y+dx[i+1]
             # print(dist[(newX,newY)])
-            if isValid(MAZE,(newX,newY)) and ((newX,newY) not in visited or dist[(newX,newY)]>dist[(x,y)]+1):
+            if isValid(MAZE,(newX,newY)) and ((newX,newY) not in visited or (dist[(newX,newY)]>dist[(x,y)]+1)):
                 g=dist[(x,y)]+1
                 dist[(newX,newY)]=g
-                newNode=Node((newX,newY),10)
+                newNode=Node((newX,newY),g)
                 pq.put(newNode)
                 visited[(newX, newY)]=(x,y)
                 cost+=1

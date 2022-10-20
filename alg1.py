@@ -1,6 +1,7 @@
+import ast
 import queue
 import heuristics as h
-
+import astar
 class Node:
     def __init__(self,coord,w=0) :
         self.coord=coord
@@ -28,6 +29,7 @@ def ALG1(MAZE,heuristic,bonus):
     pq = queue.PriorityQueue()
     dx=[-1, 0, 1, 0, -1]
     cost=0
+    importantPoints=[]
     for row in range(len(MAZE)):
         for col in range(len(MAZE[row])):
             if MAZE[row][col] == 'S':
@@ -37,60 +39,45 @@ def ALG1(MAZE,heuristic,bonus):
                     goal = (row, col)
     pq.put(Node(start))
     visited[start]=start
+    importantPoints.append(start)
     while not pq.empty():
         node =  pq.get()
-        current=node.coord
-        isBonus=False
+        currPoint=node.coord
         w=node.w
-        if current == goal:
-            print('Solution found')
-            backtrack_node = goal
-            solution.insert(0,backtrack_node)
-            while backtrack_node != start:
-                backtrack_node = visited[backtrack_node]
-                solution.insert(0,backtrack_node)
-            # tmp =len(solution)-1;
-            # for b in bonus:
-                
-            #     bp=(b[0],b[1])
-            #     if bp in solution:
-            #         tmp+=b[2]
-            # print("cost: ",tmp)
+        if currPoint == goal:
+            importantPoints.append(goal)
+            src=importantPoints.pop(0)
+            while len(importantPoints)>0:
+                dst=importantPoints.pop(0)
+                subSol=astar.findPath(MAZE,src,dst,heuristic)
+                solution+=subSol
+                src=dst
+            solution.insert(0,start)
             return start,goal,visited,solution,cost     
             
-        if node.coord in bonus:
-                bonus.pop(node.coord)
-                w=-1000
-                isBonus=True
+        if currPoint in bonus:
+                bonus.pop(currPoint)
+                importantPoints.append(currPoint)
         for i in range(4):
-            newX=current[0]+dx[i]
-            newY=current[1]+dx[i+1]
+            newX=currPoint[0]+dx[i]
+            newY=currPoint[1]+dx[i+1]
             nextPoint=(newX,newY)
             
             
             if isValid(MAZE,nextPoint) and nextPoint not in visited:
                 h=heuristic(nextPoint,goal)
                 for bPoint,bCost in bonus.items():
-                    if bPoint not in visited:
-                        tmp1=heuristic(nextPoint,bPoint)
-                        # if node == bPoint:
-                        #     tmp1=0
-                        tmpCost =tmp1+ heuristic(bPoint,goal)+bCost
-                        if tmpCost<=h:
-                            h=tmpCost
-                   
-                    
-                    
-                
-
+                    tmpCost =heuristic(nextPoint,bPoint)+ heuristic(bPoint,goal)+bCost
+                    if tmpCost<=h:
+                        h=tmpCost
+                        
                 newNode=Node((newX,newY),h+w)
                 pq.put(newNode)
-                visited[(newX, newY)]=current
+                visited[(newX, newY)]=currPoint
                 cost+=1
 
             
-        # print(current)
-        # print(node in bonus)
+      
         
     return start,goal,visited,solution,-1 
 
@@ -98,6 +85,7 @@ def ALG1(MAZE,heuristic,bonus):
 def ALG_heuristic_1(MAZE,bonus):
     return ALG1(MAZE,h.Euclid,bonus)
 
+def ALG_heuristic_2(MAZE,bonus):
+    return ALG1(MAZE,h.Mahattan,bonus)
 
-# def gbfs_heuristic_2(MAZE):
-#     return GreedyBFS(MAZE,h.Mahattan)
+

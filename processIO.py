@@ -54,7 +54,7 @@ def visualize_maze(matrix, bonus,nameIn='input',nameOut='output',route=None):
                 marker='X',s=40,color='black')
     
     plt.scatter([i[1] for i in bonus],[-i[0] for i in bonus],
-                marker='P',s=100,color='green')
+                marker='P',s=50,color='green')
 
     plt.scatter(start[1],-start[0],marker='*',
                 s=50,color='gold')

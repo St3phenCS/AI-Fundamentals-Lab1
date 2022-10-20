@@ -18,7 +18,7 @@ algList.append(astar.astar_heuristic_1)
 algList.append(astar.astar_heuristic_2)
 
 
-input_path = './input/level_1/'
+input_path = './input/level_2/'
 fileList=sorted(glob.glob(os.path.join(input_path, '*.txt')))
 
 
@@ -28,21 +28,26 @@ fileList=sorted(glob.glob(os.path.join(input_path, '*.txt')))
 #     for alg in algList:
 #         out= alg(matrix)
 #         sol=out[3]
-#         cost=out[4]
+#         pcost=out[4]
+#         cost = len(sol)
+#         print(alg.__name__+" "+intputName+ " sol cost: "+str(cost) + " process cost: "+str(pcost))
 #         costPath=IO.visualize_maze(matrix,bonus_points,intputName,alg.__name__,sol)
 #         with open(costPath, 'w') as costFile:
 #             costFile.write(str(cost))
 
-# import alg1
-# p='./input/level_2/input3.txt'
-# bonus_points, matrix = IO.read_file(p)
-# intputName=Path(p).stem
-# al=alg1.ALG_heuristic_1
-# out= al(matrix,bonus_points)
-# sol=out[3]
-# costPath=IO.visualize_maze(matrix,list(bonus_points.keys()),intputName,al.__name__,sol)
-#         sol=out[3]
-#         cost=out[4]
-#         costPath=IO.visualize_maze(matrix,bonus_points,intputName,alg.__name__,sol)
-#         with open(costPath, 'w') as costFile:
-#             costFile.write(str(cost))
+import alg1
+p='./input/level_2/input3.txt'
+bonus_points, matrix = IO.read_file(p)
+intputName=Path(p).stem
+al=alg1.ALG_heuristic_2
+bonus=list(bonus_points.keys())
+out= al(matrix,bonus_points)
+sol=out[3]
+# print(bonus)
+# print(bonus_points)
+costPath=IO.visualize_maze(matrix,bonus,intputName,al.__name__,sol)
+    # sol=out[3]
+    # cost=out[4]
+    # costPath=IO.visualize_maze(matrix,bonus_points,intputName,al.__name__,sol)
+    # with open(costPath, 'w') as costFile:
+    #     costFile.write(str(cost))

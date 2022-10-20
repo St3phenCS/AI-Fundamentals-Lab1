@@ -1,1 +1,1 @@
-print(vis,sol)
+# pygame.display.flip()

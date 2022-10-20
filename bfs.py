@@ -1,4 +1,7 @@
 
+from asyncio.windows_events import NULL
+
+
 def isValid(MAZE,cell):
     row=len(MAZE)
     col =len(MAZE[0])
@@ -8,7 +11,7 @@ def isValid(MAZE,cell):
         return False
     return True
 
-def bfs(MAZE):
+def bfs(MAZE,bonus=NULL):
     start = ()
     goal = () 
     solution = []

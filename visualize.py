@@ -68,6 +68,13 @@ def run_visualization(pathIn,alg):
     
     global MAZE ,BONUS,VIS,SOl,SRC,DST,ALGNAME,screen,TILE,STAR
     BONUS,MAZE=IO.read_file(pathIn)
+    if len(MAZE) >= 40 or len(MAZE[0]) >= 80:
+        TILE = 18
+    else: 
+        TILE = 20
+    WIDTH = TILE*len(MAZE[0])  # screen width
+    HEIGHT = TILE*len(MAZE)  # screen height
+    SCREEN_SIZE = [WIDTH, HEIGHT]
     if len(BONUS)>0:
         out = alg(MAZE,BONUS)
     else:
@@ -131,5 +138,5 @@ import astar
 import alg1
 path = './input/level_2/input3.txt'
 # alg =bfs.bfs
-alg=ucs.ucs
+alg=bfs.bfs
 run_visualization(path,alg)

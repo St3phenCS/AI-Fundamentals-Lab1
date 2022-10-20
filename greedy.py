@@ -68,5 +68,5 @@ def gbfs_heuristic_1(MAZE,bonus=NULL):
     return GreedyBFS(MAZE,h.Euclid)
 
 
-def gbfs_heuristic_2(MAZE):
+def gbfs_heuristic_2(MAZE,bonus=NULL):
     return GreedyBFS(MAZE,h.Mahattan)

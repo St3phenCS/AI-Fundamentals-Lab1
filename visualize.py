@@ -24,9 +24,10 @@ SOl=[]
 SRC=(0,0)
 DST=(0,0)
 ALGNAME=''
+STAR=None
 #Init pygame
-WIDTH = 1000 #screen width
-HEIGHT = 500 #screen height
+WIDTH = 1440 #screen width
+HEIGHT = 600 #screen height
 SCREEN_SIZE = [WIDTH, HEIGHT]
 TILE = 0 #size of each tile
 FPS = 60
@@ -39,6 +40,7 @@ FPS = 60
 
 
 def MazeInitialize(MAZE):
+    cnt =0;
     for row in range(len(MAZE)):
         for col in range(len(MAZE[row])):
             if MAZE[row][col] == 'x':
@@ -46,6 +48,8 @@ def MazeInitialize(MAZE):
                 pygame.draw.rect(screen, GRAY, (col * TILE, row * TILE, TILE - 2, TILE - 2))
 
             if MAZE[row][col] == 'v':
+                
+                
                 pygame.draw.rect(screen, GOODBLUE, (col * TILE, row * TILE, TILE, TILE))
             if MAZE[row][col] == ' ':
                 pygame.draw.rect(screen, WHITE, (col * TILE, row * TILE, TILE, TILE))
@@ -53,7 +57,8 @@ def MazeInitialize(MAZE):
                 pygame.draw.rect(screen, RED, (col * TILE, row * TILE, TILE, TILE))
             if (row, col) == DST:
                 pygame.draw.rect(screen, GREEN, (col * TILE, row * TILE, TILE, TILE))
-
+            if MAZE[row][col] == '+':
+                screen.blit(STAR,(col * TILE, row * TILE))
 
 def draw_window():
     MazeInitialize(MAZE)
@@ -61,18 +66,26 @@ def draw_window():
 
 def run_visualization(pathIn,alg):
     
-    global MAZE ,BONUS,VIS,SOl,SRC,DST,ALGNAME,screen,TILE
+    global MAZE ,BONUS,VIS,SOl,SRC,DST,ALGNAME,screen,TILE,STAR
     BONUS,MAZE=IO.read_file(pathIn)
-    out = alg(MAZE)
+    if len(BONUS)>0:
+        out = alg(MAZE,BONUS)
+    else:
+        out = alg(MAZE)
     VIS=list(out[2].keys())
     SOl=out[3]
     SRC=out[0]
     DST=out[1]
     TILE=int(HEIGHT/len(MAZE))
-    ALGNAME=bfs.bfs.__name__.upper()
+    ALGNAME=alg.__name__.upper()
     pygame.init()
     screen = pygame.display.set_mode(SCREEN_SIZE) #set screen size
     pygame.display.set_caption("VISUALIZATION {}".format(ALGNAME)) #set caption
+
+    STAR=pygame.image.load("./img/gcheems.png").convert_alpha()
+    STAR = pygame.transform.scale(STAR, (TILE*1.2, TILE*1.2))
+    screen.fill((255,255,255))
+
     algorithm_running = True
     clock = pygame.time.Clock()
     while True:
@@ -115,6 +128,8 @@ import dfs
 import ucs
 import greedy as gbfs
 import astar
-path = './input/level_1/input3.txt'
-alg =astar.astar_heuristic_2
+import alg1
+path = './input/level_2/input3.txt'
+# alg =bfs.bfs
+alg=astar.astar_heuristic_1
 run_visualization(path,alg)

@@ -79,12 +79,12 @@ def visualize_maze(matrix, bonus,nameIn='input',nameOut='output',route=None):
     if not os.path.exists(path):
         os.makedirs(path)
     fileName=path+nameOut
-    plt.savefig(fileName)
+    plt.savefig(fileName+'jpg')
     plt.close()
    
 
-    for _, point in enumerate(bonus):
-      print(f'Bonus point at position (x, y) = {point[0], point[1]} with point {point[2]}')
+    # for _, point in enumerate(bonus):
+    #   print(f'Bonus point at position (x, y) = {point[0], point[1]} with point {point[2]}')
     
     return fileName
 
@@ -92,10 +92,10 @@ def visualize_maze(matrix, bonus,nameIn='input',nameOut='output',route=None):
 def read_file(file_name: str = './input/level_1/input1.txt'):
         f=open(file_name,'r')
         n_bonus_points = int(next(f)[:-1])
-        bonus_points = []
+        bonus_points = {}
         for i in range(n_bonus_points):
             x, y, reward = map(int, next(f)[:-1].split(' '))
-            bonus_points.append((x, y, reward))
+            bonus_points[(x, y)]= reward
 
         text=f.read()
         matrix=[list(i) for i in text.splitlines()]

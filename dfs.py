@@ -12,7 +12,7 @@ def isValid(MAZE,cell):
     return True
 
 def dfs(MAZE,bonus=NULL):
-    cost=0
+    cntNode=0
     start = ()
     goal = () 
     available_path = []
@@ -21,6 +21,7 @@ def dfs(MAZE,bonus=NULL):
     visited = {}
     stack = []
     dx=[-1, 0, 1, 0, -1]
+    cost=-1
     for row in range(len(MAZE)):
         for col in range(len(MAZE[row])):
             if MAZE[row][col] == 'S':
@@ -32,14 +33,16 @@ def dfs(MAZE,bonus=NULL):
     visited[start]=start
     while len(stack) > 0:
         (x, y) = stack.pop()
+        cntNode+=1
         if (x,y) == goal:
-            print('Solution found')
             backtrack_node = goal
             solution.insert(0,backtrack_node)
             while backtrack_node != start:
                 backtrack_node = visited[backtrack_node]
                 solution.insert(0,backtrack_node)
-            return start,goal,visited,solution,cost    
+            cost+=len(solution)
+            
+            return start,goal,visited,solution,cntNode,cost    
       
         for i in range(4):
             newX=x+dx[i]
@@ -47,8 +50,8 @@ def dfs(MAZE,bonus=NULL):
             if isValid(MAZE,(newX,newY)) and (newX,newY) not in visited:
                 stack.append((newX,newY))
                 visited[(newX, newY)]=(x,y)
-                cost+=1
-    print("No solution")
-    return start,goal,visited,solution,-1   
+                
+    print(dfs.__name__+" warning: No solution found!")
+    return start,goal,visited,solution,cntNode,cost    
 
 

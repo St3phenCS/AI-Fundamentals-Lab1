@@ -28,7 +28,8 @@ def GreedyBFS(MAZE,heuristic):
     visited = {}
     pq = queue.PriorityQueue()
     dx=[-1, 0, 1, 0, -1]
-    cost=0
+    cntNode=0
+    cost=-1
     for row in range(len(MAZE)):
         for col in range(len(MAZE[row])):
             if MAZE[row][col] == 'S':
@@ -43,14 +44,16 @@ def GreedyBFS(MAZE,heuristic):
         # print(node.cell)
         (x,y)=node.cell
         w=node.w
+        cntNode+=1
         if (x,y) == goal:
-            print('Solution found')
             backtrack_node = goal
             solution.insert(0,backtrack_node)
             while backtrack_node != start:
                 backtrack_node = visited[backtrack_node]
                 solution.insert(0,backtrack_node)
-            return start,goal,visited,solution,cost     
+            cost+=len(solution)
+            
+            return start,goal,visited,solution,cntNode,cost     
       
         for i in range(4):
             newX=x+dx[i]
@@ -60,8 +63,9 @@ def GreedyBFS(MAZE,heuristic):
                 newNode=Node((newX,newY),h)
                 pq.put(newNode)
                 visited[(newX, newY)]=(x,y)
-                cost+=1
-    return start,goal,visited,solution,-1 
+                
+    print(GreedyBFS.__name__+" warning: No solution found!")
+    return start,goal,visited,solution,cntNode,cost 
 
 
 def gbfs_heuristic_1(MAZE,bonus=NULL):

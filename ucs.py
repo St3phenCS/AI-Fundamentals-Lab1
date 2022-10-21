@@ -1,9 +1,5 @@
 from asyncio.windows_events import NULL
-from dis import dis
 import queue
-MAX= 100
-INF = int(1e9)
-
 class Node:
     def __init__(self,cell,w=0) :
         self.cell=cell
@@ -30,9 +26,10 @@ def ucs(MAZE,bonus=NULL):
     visited = {}
     pq = queue.PriorityQueue()
     dx=[-1, 0, 1, 0, -1]
-    cost=0
+    cntNode=0
     dist={}
     vis=[]
+    cost=-1
     for row in range(len(MAZE)):
         for col in range(len(MAZE[row])):
             if MAZE[row][col] == 'S':
@@ -48,14 +45,16 @@ def ucs(MAZE,bonus=NULL):
         node =  pq.get()
         # print(node.cell)
         (x,y)=node.cell
+        cntNode+=1
         if (x,y) == goal:
-            print('Solution found')
             backtrack_node = goal
             solution.insert(0,backtrack_node)
             while backtrack_node != start:
                 backtrack_node = visited[backtrack_node]
                 solution.insert(0,backtrack_node)
-            return start,goal,visited,solution,cost     
+            cost+=len(solution)
+            
+            return start,goal,visited,solution,cntNode,cost     
       
         for i in range(4):
             newX=x+dx[i]
@@ -67,11 +66,8 @@ def ucs(MAZE,bonus=NULL):
                 newNode=Node((newX,newY),g)
                 pq.put(newNode)
                 visited[(newX, newY)]=(x,y)
-                cost+=1
-            # if isValid(MAZE,(newX,newY)) and (newX,newY) not in visited:
-            #     pq.put(Node((newX,newY),dist+1))
-            #     visited[(newX, newY)]=(x,y)
-            #     cost+=1
-    return start,goal,visited,solution,-1 
+                
+    print(ucs.__name__+" warning: No solution found!")
+    return start,goal,visited,solution,cntNode,cost 
 
 

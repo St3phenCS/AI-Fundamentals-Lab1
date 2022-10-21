@@ -7,7 +7,7 @@ gbfs_rg=r'^(gbfs)'
 astar_rg=r'^(astar)'
 
 
-def visualize_maze(matrix, bonus,nameIn='input',nameOut='output',route=None):
+def write_output(matrix,bonus,route=None,folPath='./output/temp/',algName='naiveAlg'):
     """
     Args:
       1. matrix: The matrix read from the input file,
@@ -62,7 +62,7 @@ def visualize_maze(matrix, bonus,nameIn='input',nameOut='output',route=None):
     if route:
         for i in range(len(route)-2):
             plt.scatter(route[i+1][1],-route[i+1][0],
-                        marker=direction[i],color='#20B2AA')
+                        marker=direction[i],color='gray')
 
     if end[0] == 0 or end[0] == len(matrix) - 1:
         plt.text(end[1],-end[0],'EXIT',color='red',
@@ -74,16 +74,16 @@ def visualize_maze(matrix, bonus,nameIn='input',nameOut='output',route=None):
             verticalalignment='center',size =7,fontweight='bold')
     plt.xticks([])
     plt.yticks([])
-
-    if re.match(gbfs_rg, nameOut):
-        path='./output/'+nameIn+'/gbfs/'
-    elif re.match(astar_rg, nameOut):
-        path='./output/'+nameIn+'/astar/'
+    folPath
+    if re.match(gbfs_rg, algName):
+        path=folPath+'gbfs/'
+    elif re.match(astar_rg, algName):
+        path=folPath+'astar/'
     else:
-        path='./output/'+nameIn+'/'+nameOut+'/'
+        path=folPath+algName+'/'
     if not os.path.exists(path):
         os.makedirs(path)
-    fileName=path+nameOut
+    fileName=path+algName
     plt.savefig(fileName+'.jpg')
     plt.close()
    

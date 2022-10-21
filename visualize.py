@@ -81,7 +81,10 @@ def run_visualization(pathIn,alg):
     SOL=out[3]
     SRC=out[0]
     DST=out[1]
-    SOL.pop(0)
+    if len(SOL)>0:
+        SOL.pop(0)
+    else:
+        print("Visualization warning: No solution found!")
     TILE=int(HEIGHT/len(MAZE))
     ALGNAME=alg.__name__.upper()
     pygame.init()
@@ -124,11 +127,13 @@ def run_visualization(pathIn,alg):
                     pygame.draw.rect(screen, GREEN, (node[1] * TILE, node[0] * TILE, TILE, TILE))
                     pygame.time.wait(70)
                     pygame.display.update()
+                pygame.image.save(screen, "./visualization/{}.jpeg".format(ALGNAME))
                 algorithm_running = False
             pygame.time.wait(50)
             
         else:
             pygame.time.wait(1500)
+            
             pygame.quit()
             sys.exit()
 
@@ -137,10 +142,10 @@ import dfs
 import ucs
 import greedy as gbfs
 import astar
-import alg1
-path = './input/level_2/input3.txt'
-# alg =bfs.bfs
-# alg=alg1.ALG_heuristic_1
-alg=alg1.ALG_heuristic_1
+import advanceAlg as adv
+path = './input/level_2/input2.txt'
+alg=adv.algo1
+# alg=astar.astar_heuristic_2
+
 run_visualization(path,alg)
 

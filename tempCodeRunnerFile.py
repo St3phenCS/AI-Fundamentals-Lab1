@@ -1,1 +1,1 @@
-print(vis,sol)
+print

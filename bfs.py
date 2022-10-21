@@ -19,7 +19,8 @@ def bfs(MAZE,bonus=NULL):
     vis=[]
     queue = []
     dx=[-1, 0, 1, 0, -1]
-    cost=0
+    cntNode=0
+    cost=-1
     for row in range(len(MAZE)):
         for col in range(len(MAZE[row])):
             if MAZE[row][col] == 'S':
@@ -28,18 +29,20 @@ def bfs(MAZE,bonus=NULL):
                 if MAZE[row][col] == ' ':
                     goal = (row, col)
     queue.append(start)
-    visited[start]=start
+    visited[start]=(-1,-1)
     vis.append(start)
     while len(queue) > 0:
         (x, y) = queue.pop(0)
+        cntNode+=1
         if (x,y) == goal:
-            print('Solution found')
             backtrack_node = goal
             solution.insert(0,backtrack_node)
             while backtrack_node != start:
                 backtrack_node = visited[backtrack_node]
                 solution.insert(0,backtrack_node)
-            return start,goal,visited,solution,cost   
+            cost+=len(solution)
+            
+            return start,goal,visited,solution,cntNode,cost   
       
         for i in range(4):
             newX=x+dx[i]
@@ -47,7 +50,8 @@ def bfs(MAZE,bonus=NULL):
             if isValid(MAZE,(newX,newY)) and (newX,newY) not in visited:
                 queue.append((newX,newY))
                 visited[(newX, newY)]=(x,y)
-                cost+=1
-    return start,goal,visited,solution,-1
+                
+    print(bfs.__name__+" warning: No solution found!")
+    return start,goal,visited,solution,cntNode,cost
 
 

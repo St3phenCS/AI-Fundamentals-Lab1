@@ -9,9 +9,6 @@ class Node:
     
     def __lt__(self,other):
         return self.w<=other.w
-
-
-
 def isValid(MAZE,coord):
     row=len(MAZE)
     col =len(MAZE[0])
@@ -21,14 +18,15 @@ def isValid(MAZE,coord):
         return False
     return True
 
-def ALG1(MAZE,heuristic,bonus):
+def ALG(MAZE,heuristic,bonus):
     start = ()
     goal = () 
     solution = []
     visited = {}
     pq = queue.PriorityQueue()
     dx=[-1, 0, 1, 0, -1]
-    cost=0
+    cntNode=0
+    cost =-1
     importantPoints=[]
     for row in range(len(MAZE)):
         for col in range(len(MAZE[row])):
@@ -44,6 +42,7 @@ def ALG1(MAZE,heuristic,bonus):
         node =  pq.get()
         currPoint=node.coord
         w=node.w
+        cntNode+=1
         if currPoint == goal:
             importantPoints.append(goal)
             src=importantPoints.pop(0)
@@ -52,18 +51,20 @@ def ALG1(MAZE,heuristic,bonus):
                 subSol=astar.findPath(MAZE,src,dst,heuristic)
                 solution+=subSol
                 src=dst
-            solution.insert(0,start)
-            return start,goal,visited,solution,cost     
-            
+           
+            solution.insert(0,start)   
+            cost+=len(solution)   
+            return start,goal,visited,solution,cntNode,cost       
         if currPoint in bonus:
+                cost+=bonus[currPoint]
+                cntNode-=bonus[currPoint]
                 bonus.pop(currPoint)
                 importantPoints.append(currPoint)
+                
         for i in range(4):
             newX=currPoint[0]+dx[i]
             newY=currPoint[1]+dx[i+1]
             nextPoint=(newX,newY)
-            
-            
             if isValid(MAZE,nextPoint) and nextPoint not in visited:
                 h=heuristic(nextPoint,goal)
                 for bPoint,bCost in bonus.items():
@@ -74,18 +75,15 @@ def ALG1(MAZE,heuristic,bonus):
                 newNode=Node((newX,newY),h+w)
                 pq.put(newNode)
                 visited[(newX, newY)]=currPoint
-                cost+=1
-
-            
-      
-        
-    return start,goal,visited,solution,-1 
+                
+    print(ALG.__name__+" warning: No solution found!")
+    return start,goal,visited,solution,cntNode,cost 
 
 
-def ALG_heuristic_1(MAZE,bonus):
-    return ALG1(MAZE,h.Euclid,bonus)
+def algo1(MAZE,bonus):
+    return ALG(MAZE,h.Euclid,bonus)
 
-def ALG_heuristic_2(MAZE,bonus):
-    return ALG1(MAZE,h.Mahattan,bonus)
+# def ALG_heuristic_2(MAZE,bonus):
+#     return ALG(MAZE,h.Mahattan,bonus)
 
 

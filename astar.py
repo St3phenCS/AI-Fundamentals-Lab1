@@ -29,8 +29,9 @@ def AStar(MAZE,heuristic):
     dist={}
     pq = queue.PriorityQueue()
     dx=[-1, 0, 1, 0, -1]
-    cntNode=0
-    cost=0
+    cntNode=-1
+    cost=-1
+    VIS=[]
     for row in range(len(MAZE)):
         for col in range(len(MAZE[row])):
             if MAZE[row][col] == 'S':
@@ -45,14 +46,15 @@ def AStar(MAZE,heuristic):
         node =  pq.get()
         (x,y)=node.cell
         cntNode+=1
+        VIS.append(node.cell)
         if (x,y) == goal:
             backtrack_node = goal
             solution.insert(0,backtrack_node)
             while backtrack_node != start:
                 backtrack_node = visited[backtrack_node]
                 solution.insert(0,backtrack_node)
-            cost=len(solution)
-            return start,goal,visited,solution,cntNode,cost      
+            cost+=len(solution)
+            return start,goal,VIS,solution,cntNode,cost      
       
         for i in range(4):
             newX=x+dx[i]
@@ -76,7 +78,7 @@ def astar_heuristic_2(MAZE,bonus=NULL):
     return AStar(MAZE,heu.Mahattan)
 
 
-#astar algrithm find path between source(src) and destination(dst) with simplified output
+#astar algrithm find path between source(src) and destination(dst) with simplified output 
 def findPath(MAZE,src,dst,heu):
     start = src
     goal = dst 

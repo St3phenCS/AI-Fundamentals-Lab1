@@ -26,7 +26,7 @@ def ucs(MAZE,bonus=NULL):
     visited = {}
     pq = queue.PriorityQueue()
     dx=[-1, 0, 1, 0, -1]
-    cntNode=0
+    cntNode=-1
     dist={}
     vis=[]
     cost=-1
@@ -46,6 +46,7 @@ def ucs(MAZE,bonus=NULL):
         # print(node.cell)
         (x,y)=node.cell
         cntNode+=1
+        vis.append((x,y))
         if (x,y) == goal:
             backtrack_node = goal
             solution.insert(0,backtrack_node)
@@ -54,7 +55,7 @@ def ucs(MAZE,bonus=NULL):
                 solution.insert(0,backtrack_node)
             cost+=len(solution)
             
-            return start,goal,visited,solution,cntNode,cost     
+            return start,goal,vis,solution,cntNode,cost     
       
         for i in range(4):
             newX=x+dx[i]
@@ -68,6 +69,6 @@ def ucs(MAZE,bonus=NULL):
                 visited[(newX, newY)]=(x,y)
                 
     print(ucs.__name__+" warning: No solution found!")
-    return start,goal,visited,solution,cntNode,cost 
+    return start,goal,vis,solution,cntNode,cost 
 
 

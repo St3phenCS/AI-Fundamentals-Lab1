@@ -1,6 +1,5 @@
-3
+2
 6 19 -25
-6 23 -25
 9 16 -6
 xxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxx
 x   x                 x   x        x  x
@@ -8,7 +7,7 @@ x x xxxxx xxx x   x xxx       xxxxxx  x
 x x   x x             x           x   x
 xxxxx x xxxxx   xxx   x x x xxx x xxxxx
 x   x     x   x         x x   x x     x
-x xxx xxxxx   xxx x+xx +xxxxxxxxxxxx  x
+x xxx xxxxx   xxx x+xx  xxxxxxxxxxxx  x
 x   x         x x    x             x  x
 x   x x   x   x xxxxxxx  xx xxx xxxx xx
 x     x   x     +   x x     x x x  x  x

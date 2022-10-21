@@ -19,7 +19,7 @@ def bfs(MAZE,bonus=NULL):
     vis=[]
     queue = []
     dx=[-1, 0, 1, 0, -1]
-    cntNode=0
+    cntNode=-1
     cost=-1
     for row in range(len(MAZE)):
         for col in range(len(MAZE[row])):
@@ -30,10 +30,11 @@ def bfs(MAZE,bonus=NULL):
                     goal = (row, col)
     queue.append(start)
     visited[start]=(-1,-1)
-    vis.append(start)
+    
     while len(queue) > 0:
         (x, y) = queue.pop(0)
         cntNode+=1
+        vis.append((x, y))
         if (x,y) == goal:
             backtrack_node = goal
             solution.insert(0,backtrack_node)
@@ -42,7 +43,7 @@ def bfs(MAZE,bonus=NULL):
                 solution.insert(0,backtrack_node)
             cost+=len(solution)
             
-            return start,goal,visited,solution,cntNode,cost   
+            return start,goal,vis,solution,cntNode,cost   
       
         for i in range(4):
             newX=x+dx[i]

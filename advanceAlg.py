@@ -27,6 +27,7 @@ def ALG(MAZE,heuristic,bonus):
     dx=[-1, 0, 1, 0, -1]
     cntNode=0
     cost =-1
+    VIS=[]
     importantPoints=[]
     for row in range(len(MAZE)):
         for col in range(len(MAZE[row])):
@@ -43,6 +44,7 @@ def ALG(MAZE,heuristic,bonus):
         currPoint=node.coord
         w=node.w
         cntNode+=1
+        VIS.append(currPoint)
         if currPoint == goal:
             importantPoints.append(goal)
             src=importantPoints.pop(0)
@@ -54,10 +56,10 @@ def ALG(MAZE,heuristic,bonus):
            
             solution.insert(0,start)   
             cost+=len(solution)   
-            return start,goal,visited,solution,cntNode,cost       
+            return start,goal,VIS,solution,cntNode,cost       
         if currPoint in bonus:
                 cost+=bonus[currPoint]
-                cntNode-=bonus[currPoint]
+                cntNode+=bonus[currPoint]
                 bonus.pop(currPoint)
                 importantPoints.append(currPoint)
                 

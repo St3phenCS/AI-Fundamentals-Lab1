@@ -1,7 +1,7 @@
 import pygame
-import time
 import sys,os
 import processIO as IO
+from pathlib import Path
 
 #colors
 BLACK = (0, 0, 0)
@@ -85,11 +85,12 @@ def run_visualization(pathIn,alg):
     SCREEN_SIZE = [WIDTH, HEIGHT]
     B= list(BONUS.keys())
     out = alg(MAZE,BONUS)
-    VIS=list(out[2].keys())
-  
+    # VIS=list(out[2].keys())
+    VIS=out[2]
     SOL=out[3]
     SRC=out[0]
     DST=out[1]
+    # print(len(VIS))
     if len(SOL)>0:
         SOL.pop(0)
     else:
@@ -104,7 +105,7 @@ def run_visualization(pathIn,alg):
     CHEEMSG = pygame.transform.scale(CHEEMSG, (TILE*1.2, TILE*1.2))
     
     BANANAS=pygame.image.load("./img/banana.png").convert_alpha()
-    BANANAS=pygame.transform.scale(BANANAS, (TILE*1.5, TILE*1.5))
+    BANANAS=pygame.transform.scale(BANANAS, (TILE, TILE))
 
     screen.fill((255,255,255))
     algorithm_running = True
@@ -134,9 +135,9 @@ def run_visualization(pathIn,alg):
                 pygame.draw.rect(screen, BLUE, (y * TILE, x * TILE, TILE, TILE))
                 pygame.time.wait(30)
                 pygame.display.update()
-            else:
-                bana1=[]
+            else:              
                 for node in SOL:
+                    
                     pygame.draw.rect(screen, GREEN, (node[1] * TILE, node[0] * TILE, TILE, TILE))
                     if node in B:
                         screen.blit(BANANAS,(node[1] * TILE,node[0] * TILE))
@@ -145,10 +146,10 @@ def run_visualization(pathIn,alg):
                     pygame.time.wait(70)
                     pygame.display.update()
            
-                        
-                if not os.path.exists('./visualization'):
-                    os.makedirs('./visualization')
-                pygame.image.save(screen, "./visualization/{}.jpeg".format(ALGNAME))
+                pathIn=Path(pathIn).stem       
+                if not os.path.exists('./visualize_img'):
+                    os.makedirs('./visualize_img')
+                pygame.image.save(screen, "./visualize_img/{}_{}.jpeg".format(ALGNAME,pathIn))
                 algorithm_running = False
             pygame.time.wait(50)
             
@@ -164,9 +165,27 @@ import ucs
 import greedy as gbfs
 import astar
 import advanceAlg as adv
-path = './input/level_2/input3.txt'
-alg=adv.algo1
-# alg=astar.astar_heuristic_2
 
-run_visualization(path,alg)
+# alg=adv.algo1
+# alg=astar.astar_heuristic_1
+# alg=gbfs.gbfs_heuristic_1
 
+alg={}
+alg["dfs"]=dfs.dfs
+alg["bfs"]=bfs.bfs
+alg["ucs"]=ucs.ucs
+alg["gbfs1"]=gbfs.gbfs_heuristic_1
+alg["gbfs2"]=gbfs.gbfs_heuristic_2
+alg["astar1"]=astar.astar_heuristic_1
+alg["astar2"]=astar.astar_heuristic_2
+alg["adv"]=adv.algo1
+
+
+if __name__ == "__main__":
+    
+    path = "./input/level_{0}/input{1}.txt".format(sys.argv[1],sys.argv[2])
+    algName=sys.argv[3]
+    print("Visualizing {} on input {}".format(algName,path))
+    run_visualization(path,alg[algName])
+   
+   

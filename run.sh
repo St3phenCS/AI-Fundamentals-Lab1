@@ -1,2 +1,1 @@
-pip install -r ./requirements.txt
-python main.py
+python -u './main.py

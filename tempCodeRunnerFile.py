@@ -1,2 +1,1 @@
- pygame.time.wait(70)
-                    pygame.display.update()
+alg=adv.algo1

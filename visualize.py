@@ -22,7 +22,8 @@ SOL=[]
 SRC=(0,0)
 DST=(0,0)
 ALGNAME=''
-STAR=None
+CHEEMSG=None
+BANANAS=None
 #Init pygame
 WIDTH = 1440 #screen width
 HEIGHT = 600 #screen height
@@ -39,6 +40,8 @@ FPS = 60
 
 def MazeInitialize(MAZE):
     cnt =0;
+    bana=[]
+    bns=[]
     for row in range(len(MAZE)):
         for col in range(len(MAZE[row])):
             if MAZE[row][col] == 'x':
@@ -46,8 +49,6 @@ def MazeInitialize(MAZE):
                 pygame.draw.rect(screen, GRAY, (col * TILE, row * TILE, TILE - 2, TILE - 2))
 
             if MAZE[row][col] == 'v':
-                
-                
                 pygame.draw.rect(screen, GOODBLUE, (col * TILE, row * TILE, TILE, TILE))
             if MAZE[row][col] == ' ':
                 pygame.draw.rect(screen, WHITE, (col * TILE, row * TILE, TILE, TILE))
@@ -56,7 +57,16 @@ def MazeInitialize(MAZE):
             if (row, col) == DST:
                 pygame.draw.rect(screen, ORANGE, (col * TILE, row * TILE, TILE, TILE))
             if MAZE[row][col] == '+':
-                screen.blit(STAR,(col * TILE, row * TILE))
+                bns.append((row,col))
+                
+            if MAZE[row][col] == 'b':
+                bana.append((row,col))
+                pygame.draw.rect(screen, GOODBLUE, (col * TILE, row * TILE, TILE, TILE))
+    for cell in bns:
+        screen.blit(CHEEMSG,(cell[1] * TILE, cell[0] * TILE))          
+    for cell in bana:
+        screen.blit(BANANAS,(cell[1] * TILE, cell[0] * TILE))
+               
 
 def draw_window():
     MazeInitialize(MAZE)
@@ -64,7 +74,7 @@ def draw_window():
 
 def run_visualization(pathIn,alg):
     
-    global MAZE ,BONUS,VIS,SOL,SRC,DST,ALGNAME,screen,TILE,STAR
+    global MAZE ,BONUS,VIS,SOL,SRC,DST,ALGNAME,screen,TILE,CHEEMSG,BANANAS
     BONUS,MAZE=IO.read_file(pathIn)
     if len(MAZE) >= 40 or len(MAZE[0]) >= 80:
         TILE = 18
@@ -73,6 +83,7 @@ def run_visualization(pathIn,alg):
     WIDTH = TILE*len(MAZE[0])  # screen width
     HEIGHT = TILE*len(MAZE)  # screen height
     SCREEN_SIZE = [WIDTH, HEIGHT]
+    B= list(BONUS.keys())
     out = alg(MAZE,BONUS)
     VIS=list(out[2].keys())
   
@@ -89,10 +100,13 @@ def run_visualization(pathIn,alg):
     screen = pygame.display.set_mode(SCREEN_SIZE) #set screen size
     pygame.display.set_caption("VISUALIZATION {}".format(ALGNAME)) #set caption
 
-    STAR=pygame.image.load("./img/gcheems.png").convert_alpha()
-    STAR = pygame.transform.scale(STAR, (TILE*1.2, TILE*1.2))
-    screen.fill((255,255,255))
+    CHEEMSG=pygame.image.load("./img/gcheems.png").convert_alpha()
+    CHEEMSG = pygame.transform.scale(CHEEMSG, (TILE*1.2, TILE*1.2))
+    
+    BANANAS=pygame.image.load("./img/banana.png").convert_alpha()
+    BANANAS=pygame.transform.scale(BANANAS, (TILE*1.5, TILE*1.5))
 
+    screen.fill((255,255,255))
     algorithm_running = True
     clock = pygame.time.Clock()
     while True:
@@ -101,9 +115,7 @@ def run_visualization(pathIn,alg):
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-                break
         draw_window()
-        
         if algorithm_running:
             if len(VIS)>0:
                 current =VIS.pop(0)
@@ -114,18 +126,26 @@ def run_visualization(pathIn,alg):
                 #mark cell VISited
                 tmp = list(MAZE[x])
                 tmp[y]='v'
+                # print(current)
+                if current in B :
+                    tmp[y]='b' #visited bonus
+                    # screen.blit(CHEEMSG,(y * TILE,x * TILE))
                 MAZE[x] = ''.join(tmp)
-                ##
-                
                 pygame.draw.rect(screen, BLUE, (y * TILE, x * TILE, TILE, TILE))
                 pygame.time.wait(30)
                 pygame.display.update()
             else:
+                bana1=[]
                 for node in SOL:
                     pygame.draw.rect(screen, GREEN, (node[1] * TILE, node[0] * TILE, TILE, TILE))
+                    if node in B:
+                        screen.blit(BANANAS,(node[1] * TILE,node[0] * TILE))
+                         
+                        
                     pygame.time.wait(70)
                     pygame.display.update()
-
+           
+                        
                 if not os.path.exists('./visualization'):
                     os.makedirs('./visualization')
                 pygame.image.save(screen, "./visualization/{}.jpeg".format(ALGNAME))
@@ -144,7 +164,7 @@ import ucs
 import greedy as gbfs
 import astar
 import advanceAlg as adv
-path = './input/level_2/input2.txt'
+path = './input/level_2/input3.txt'
 alg=adv.algo1
 # alg=astar.astar_heuristic_2
 

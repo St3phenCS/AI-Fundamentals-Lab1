@@ -1,1 +1,2 @@
-import algorithm.heuristics as h
+ pygame.time.wait(70)
+                    pygame.display.update()

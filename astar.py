@@ -1,6 +1,6 @@
 from asyncio.windows_events import NULL
 import queue
-import heuristics as h
+import heuristics as heu
 
 class Node:
     def __init__(self,cell,w=0) :
@@ -70,10 +70,10 @@ def AStar(MAZE,heuristic):
 
 
 def astar_heuristic_1(MAZE,bonus=NULL):
-    return AStar(MAZE,h.Euclid)
+    return AStar(MAZE,heu.Euclid)
 
 def astar_heuristic_2(MAZE,bonus=NULL):
-    return AStar(MAZE,h.Mahattan)
+    return AStar(MAZE,heu.Mahattan)
 
 
 #astar algrithm find path between source(src) and destination(dst) with simplified output
@@ -112,3 +112,4 @@ def findPath(MAZE,src,dst,heu):
                 cost+=1
     print(findPath.__name__+" warning: No solution found!")
     return solution
+

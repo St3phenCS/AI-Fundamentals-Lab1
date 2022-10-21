@@ -1,13 +1,19 @@
 import os,glob
 from pathlib import Path
 import processIO as IO
-import bfs
-import dfs
-import ucs
-import heuristics as h
+
+import bfs as bfs
+import dfs as dfs
+import ucs as ucs
 import greedy as gbfs
-import astar
+import astar as astar
 import advanceAlg as adv
+
+
+
+
+
+
 algList={}
 algs1=[]
 algs2=[]
@@ -39,12 +45,13 @@ for lvl in inputFolders:
         # print(folPath)
         bonus_points, matrix = IO.read_file(inPath)
         for alg in algList[lvl]:
+            bonus=list(bonus_points.keys())
             out= alg(matrix,bonus_points)
             sol=out[3]
             pcost=out[4]
             cost = out[5]
             print(alg.__name__+" "+inName+ " sol cost: "+str(cost) + " process cost: "+str(pcost))
-            textFile=IO.write_output(matrix,bonus_points,sol,folPath,alg.__name__)
+            textFile=IO.write_output(matrix,bonus,sol,folPath,alg.__name__)
             with open(textFile, 'w') as outFile:
                 if len(sol)>0:
                     outFile.write(str(cost))

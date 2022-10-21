@@ -1,8 +1,6 @@
-from hashlib import algorithms_available
-from pickle import GLOBAL
 import pygame
 import time
-import sys
+import sys,os
 import processIO as IO
 
 #colors
@@ -127,6 +125,9 @@ def run_visualization(pathIn,alg):
                     pygame.draw.rect(screen, GREEN, (node[1] * TILE, node[0] * TILE, TILE, TILE))
                     pygame.time.wait(70)
                     pygame.display.update()
+
+                if not os.path.exists('./visualization'):
+                    os.makedirs('./visualization')
                 pygame.image.save(screen, "./visualization/{}.jpeg".format(ALGNAME))
                 algorithm_running = False
             pygame.time.wait(50)

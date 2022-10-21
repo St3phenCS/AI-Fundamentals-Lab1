@@ -1,1 +1,1 @@
-print
+import algorithm.heuristics as h

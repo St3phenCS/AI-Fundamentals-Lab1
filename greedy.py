@@ -2,6 +2,7 @@ from asyncio.windows_events import NULL
 import queue
 import heuristics as h
 
+
 class Node:
     def __init__(self,cell,w=0) :
         self.cell=cell

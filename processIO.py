@@ -44,8 +44,10 @@ def write_output(matrix,bonus,route=None,folPath='./output/temp/',algName='naive
 
         direction.pop(0)
 
-    #2. Drawing the map
-    ax=plt.figure(dpi=200).add_subplot(111)
+   #2. Drawing the map
+    w=len(matrix[0])
+    h=len(matrix)
+    ax=plt.figure(dpi=200, figsize=(int(w/3),int(h/3))).add_subplot(111)
 
     for i in ['top','bottom','right','left']:
         ax.spines[i].set_visible(False)
@@ -84,7 +86,7 @@ def write_output(matrix,bonus,route=None,folPath='./output/temp/',algName='naive
     if not os.path.exists(path):
         os.makedirs(path)
     fileName=path+algName
-    plt.savefig(fileName+'.jpg')
+    plt.savefig(fileName+'.jpg',bbox_inches='tight')
     plt.close()
    
 

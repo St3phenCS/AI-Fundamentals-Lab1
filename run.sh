@@ -1,1 +1,1 @@
-python -u './main.py
+python -m main

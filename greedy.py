@@ -1,4 +1,3 @@
-from asyncio.windows_events import NULL
 import queue
 import heuristics as h
 
@@ -71,9 +70,9 @@ def GreedyBFS(MAZE,heuristic):
     return start,goal,vis,solution,cntNode,cost 
 
 
-def gbfs_heuristic_1(MAZE,bonus=NULL):
+def gbfs_heuristic_1(MAZE,bonus=None):
     return GreedyBFS(MAZE,h.Euclid)
 
 
-def gbfs_heuristic_2(MAZE,bonus=NULL):
+def gbfs_heuristic_2(MAZE,bonus=None):
     return GreedyBFS(MAZE,h.Mahattan)

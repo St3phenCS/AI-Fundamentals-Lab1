@@ -1,4 +1,3 @@
-from asyncio.windows_events import NULL
 import queue
 class Node:
     def __init__(self,cell,w=0) :
@@ -19,7 +18,7 @@ def isValid(MAZE,cell):
         return False
     return True
 
-def ucs(MAZE,bonus=NULL):
+def ucs(MAZE,bonus=None):
     start = ()
     goal = () 
     solution = []

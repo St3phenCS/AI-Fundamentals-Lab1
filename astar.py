@@ -1,4 +1,3 @@
-from asyncio.windows_events import NULL
 import queue
 import heuristics as heu
 
@@ -71,10 +70,10 @@ def AStar(MAZE,heuristic):
     return start,goal,visited,solution,cntNode,cost
 
 
-def astar_heuristic_1(MAZE,bonus=NULL):
+def astar_heuristic_1(MAZE,bonus=None):
     return AStar(MAZE,heu.Euclid)
 
-def astar_heuristic_2(MAZE,bonus=NULL):
+def astar_heuristic_2(MAZE,bonus=None):
     return AStar(MAZE,heu.Mahattan)
 
 

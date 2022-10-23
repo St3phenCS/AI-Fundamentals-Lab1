@@ -79,7 +79,7 @@ def ALG(MAZE,heuristic,bonus):
                 visited[(newX, newY)]=currPoint
                 
     print(ALG.__name__+" warning: No solution found!")
-    return start,goal,visited,solution,cntNode,cost 
+    return start,goal,vis,solution,cntNode,cost 
 
 
 def algo1(MAZE,bonus):

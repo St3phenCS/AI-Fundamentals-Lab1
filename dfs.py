@@ -12,7 +12,7 @@ def dfs(MAZE,bonus=None):
     start = ()
     goal = () 
     solution = []
-    VIS=[]
+    vis=[]
     visited = {}
     stack = []
     dx=[-1, 0, 1, 0, -1]
@@ -29,7 +29,7 @@ def dfs(MAZE,bonus=None):
     while len(stack) > 0:
         (x, y) = stack.pop()
         cntNode+=1
-        VIS.append((x, y))
+        vis.append((x, y))
         if (x,y) == goal:
             backtrack_node = goal
             solution.insert(0,backtrack_node)
@@ -38,7 +38,7 @@ def dfs(MAZE,bonus=None):
                 solution.insert(0,backtrack_node)
             cost+=len(solution)
             
-            return start,goal,VIS,solution,cntNode,cost    
+            return start,goal,vis,solution,cntNode,cost    
       
         for i in range(4):
             newX=x+dx[i]
@@ -48,6 +48,6 @@ def dfs(MAZE,bonus=None):
                 visited[(newX, newY)]=(x,y)
                 
     print(dfs.__name__+" warning: No solution found!")
-    return start,goal,visited,solution,cntNode,cost    
+    return start,goal,vis,solution,cntNode,cost    
 
 

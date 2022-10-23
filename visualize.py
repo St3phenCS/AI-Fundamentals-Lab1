@@ -90,7 +90,6 @@ def run_visualization(pathIn,alg):
     SOL=out[3]
     SRC=out[0]
     DST=out[1]
-    # print(len(VIS))
     if len(SOL)>0:
         SOL.pop(0)
     else:
@@ -119,7 +118,9 @@ def run_visualization(pathIn,alg):
         draw_window()
         if algorithm_running:
             if len(VIS)>0:
+               
                 current =VIS.pop(0)
+               
                 x=current[0]
                 y=current[1]
                 if (x,y)==DST:

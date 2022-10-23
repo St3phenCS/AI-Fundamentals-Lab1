@@ -38,7 +38,6 @@ def bfs(MAZE,bonus=None):
                 backtrack_node = visited[backtrack_node]
                 solution.insert(0,backtrack_node)
             cost+=len(solution)
-            
             return start,goal,vis,solution,cntNode,cost   
       
         for i in range(4):
@@ -49,6 +48,6 @@ def bfs(MAZE,bonus=None):
                 visited[(newX, newY)]=(x,y)
                 
     print(bfs.__name__+" warning: No solution found!")
-    return start,goal,visited,solution,cntNode,cost
+    return start,goal,vis,solution,cntNode,cost
 
 

@@ -2,7 +2,7 @@
 
 ## Important
 
-Change directory (cd) into folder which includes your visualize.py
+Change directory (cd) into folder which includes your `visualize.py`.
 Don't forget to install required packages first
 
 ```sh

@@ -3,13 +3,13 @@
 ## Important
 
 Change directory (cd) into folder which includes your `visualize.py`.
-Don't forget to install required packages first
+Don't forget to install required packages first:
 
 ```sh
 pip install -r requirements.txt
 ```
 
-or install then run when installation complete
+or install then run when installation complete:
 
 ```sh
 bash run.sh
